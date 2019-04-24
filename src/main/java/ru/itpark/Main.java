@@ -1,15 +1,10 @@
 package ru.itpark;
 
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ConfigurationClassPostProcessor;
-import org.springframework.context.event.DefaultEventListenerFactory;
-import org.springframework.context.event.EventListenerMethodProcessor;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericGroovyApplicationContext;
-import org.springframework.core.io.ClassPathResource;
 import ru.itpark.client.RequestClient;
 import ru.itpark.config.JavaConfig;
 import ru.itpark.processor.CachedAnnotationBPP;
