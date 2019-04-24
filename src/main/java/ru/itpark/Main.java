@@ -1,9 +1,15 @@
 package ru.itpark;
 
+import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ConfigurationClassPostProcessor;
+import org.springframework.context.event.DefaultEventListenerFactory;
+import org.springframework.context.event.EventListenerMethodProcessor;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericGroovyApplicationContext;
+import org.springframework.core.io.ClassPathResource;
 import ru.itpark.client.RequestClient;
 import ru.itpark.config.JavaConfig;
 import ru.itpark.processor.CachedAnnotationBPP;
@@ -16,8 +22,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        var ids = List.of(12);
-//        var ids = List.of(12, 14, 17, 12, 14);
+        var ids = List.of(12, 14, 17, 12, 14);
+//        var ids = List.of(12);
+
         {
             var context = new AnnotationConfigApplicationContext("ru.itpark.client", "ru.itpark.processor", "ru.itpark.service");
             var service = context.getBean(PostService.class);
@@ -42,9 +49,10 @@ public class Main {
             ids.forEach(id ->
                     System.out.println("\n" + id + ": " + service.getPost(id))
             );
-//            TODO: fix placeholder 'url'
             System.out.println("\nURL: " + service.getClient().getUrl());
         }
+
+
 
         {
             var context = new GenericGroovyApplicationContext("beans.groovy");
@@ -52,19 +60,20 @@ public class Main {
             ids.forEach(id ->
                     System.out.println("\n" + id + ": " + service.getPost(id))
             );
-//            TODO: fix placeholder 'url'
             System.out.println("\nURL: " + service.getClient().getUrl());
         }
+
 
         {
             var context = new GenericApplicationContext();
 
-            context.registerBean("beanFactoryPostProcessor", PlaceholderSubstitutionBFPP.class);
+            context.registerBean("placeholderSubstitutionBFPP", PlaceholderSubstitutionBFPP.class);
+            context.registerBean("autowiredAnnotationBeanPostProcessor", AutowiredAnnotationBeanPostProcessor.class);
             context.registerBean("beanPostProcessor", CachedAnnotationBPP.class);
             context.registerBean("requestClient", RequestClient.class);
             context.registerBean("postService", PostService.class);
             context.refresh();
-//
+
             var service = context.getBean(PostService.class);
             ids.forEach(id ->
                     System.out.println("\n" + id + ": " + service.getPost(id))

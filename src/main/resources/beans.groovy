@@ -10,6 +10,9 @@ beans {
         locations = new ClassPathResource("connection.properties");
     }
 
+    xmlns([ctx:'http://www.springframework.org/schema/context'])
+    ctx.'annotation-config'(true)
+
     beanPostProcessor(CachedAnnotationBPP) {}
 
     requestClient(RequestClient) {}
