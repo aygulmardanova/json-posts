@@ -60,7 +60,7 @@ public class Main {
 
 
         {
-            var context = new GenericApplicationContext();
+            var context = new AnnotationConfigApplicationContext();
 
             context.registerBean("placeholderSubstitutionBFPP", PlaceholderSubstitutionBFPP.class);
             context.registerBean("autowiredAnnotationBeanPostProcessor", AutowiredAnnotationBeanPostProcessor.class);
@@ -73,7 +73,6 @@ public class Main {
             ids.forEach(id ->
                     System.out.println("\n" + id + ": " + service.getPost(id))
             );
-//            TODO: fix placeholder 'url'
             System.out.println("\nURL: " + service.getClient().getUrl());
         }
 
