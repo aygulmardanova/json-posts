@@ -4,9 +4,9 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import ru.itpark.client.RequestClient;
 import ru.itpark.processor.CachedAnnotationBPP;
+import ru.itpark.processor.PlaceholderSubstitutionBFPP;
 import ru.itpark.service.PostService;
 
 @Configuration
@@ -14,9 +14,7 @@ public class JavaConfig {
 
     @Bean
     public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() {
-        var configurer = new PropertyPlaceholderConfigurer();
-        configurer.setLocation(new ClassPathResource("connection.properties"));
-        return configurer;
+        return new PlaceholderSubstitutionBFPP();
     }
 
     @Bean

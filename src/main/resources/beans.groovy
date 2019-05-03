@@ -7,7 +7,7 @@ import ru.itpark.service.PostService
 beans {
 
     propertyPlaceholderConfigurer(PlaceholderSubstitutionBFPP) {
-        locations = new ClassPathResource("connection.properties");
+        locations = new ClassPathResource("properties.json");
     }
 
     xmlns([ctx:'http://www.springframework.org/schema/context'])
